@@ -24,11 +24,12 @@ class HelloController extends Controller
 {
 
     public function index(Request $request){
+        return view('hello.index');
 
         // $message = "Hello!";
         // $data = ["message" => $message];
 
-        return view("hello.index",["data"=>$request->data]);
+        // return view("hello.index",["data"=>$request->data]);
         // $data = ['one','two','three','four','five'];
         // $data = [
         //     ["name"=>"山田たろう","mail"=>"taro@yamada"],
