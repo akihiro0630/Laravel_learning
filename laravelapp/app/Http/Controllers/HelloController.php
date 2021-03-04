@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\HelloRequest;
 // global $head,$style,$body,$end;
 // $head = '<html><head>';
 // $style = <<<EOF
@@ -24,7 +25,8 @@ class HelloController extends Controller
 {
 
     public function index(Request $request){
-        return view('hello.index');
+        return view("hello.index",['msg' =>"フォームを入力:"]);
+        // return view('hello.index');
 
         // $message = "Hello!";
         // $data = ["message" => $message];
@@ -43,11 +45,36 @@ class HelloController extends Controller
         // return view('hello.index',['msg'=>'']);
 
     }
-    public function post(Request $request){
-        $msg = $request->msg;
-        $data = ['msg'=> $msg];
-        // $data = ['msg'=>'こんにちは、'.$msg .'さん！'];
-        return view('hello.index',$data);
+    public function post(HelloRequest $request){
+
+        //controllerにvalidationを書くp124
+        // $validate_rule =[
+        //     'name' =>'required',
+        //     'mail' =>'email',
+        //     'age' =>'numeric|between:0,150',
+        // ];
+
+        // $this->validate($request, $validate_rule);
+        //return view('hello.index',['msg'=>'正しく入力されました!']);
+
+
+        //validatorを作る場合p144
+        // $validator = Validator::make($request->all()[
+        //     'name' =>'required',
+        //     'mail' =>'email',
+        //     'age' =>'numeric|between:0,150',
+        // ]);
+        // if($validator->fails()){
+        //     return redirect('/hello')->withErrors($validator)
+        //                                 ->withInput();
+        // }
+        return view('hello.index',['msg'=>'正しく入力されました!']);
+        
+        
+        // $msg = $request->msg;
+        // $data = ['msg'=> $msg];
+        // // $data = ['msg'=>'こんにちは、'.$msg .'さん！'];
+        // return view('hello.index',$data);
 
     }
     // public function index(Request $request){
