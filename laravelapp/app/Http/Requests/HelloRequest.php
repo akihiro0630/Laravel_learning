@@ -32,7 +32,7 @@ class HelloRequest extends FormRequest
         return [
             'name' =>'required',
             'mail' =>'email',
-            'age' =>'numeric|hello',
+            'age' =>['numeric',new Myrule(5)],
         
             //
         ];

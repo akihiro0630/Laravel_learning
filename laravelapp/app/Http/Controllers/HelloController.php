@@ -26,9 +26,17 @@ class HelloController extends Controller
 {
 
     public function index(Request $request){
+        //クッキーの取得と表示p164
+        if($request->hasCookie('msg')){
+            $msg ='Cookie:'.$request->cookie('msg');
+        }else{
+            $msg = '※クッキーはありません。';
+        }
+
+        return view('hello.index',['msg' => $msg]);
 
         // オリジナルのバリデータを使うp156
-        return view("hello.index", ["msg" => "フォームを入力してください。"]);
+        // return view("hello.index", ["msg" => "フォームを入力してください。"]);
          // クエリ文字列にバリデータを適用するp147
         //  $validator = Validator::make($request->query(),[
         //     'id' => 'required',
@@ -60,9 +68,22 @@ class HelloController extends Controller
         // return view('hello.index',['msg'=>'']);
 
     }
-    public function post(HelloRequest $request){
+    public function post(Request $request){
+
+        //クッキーを読み書きする
+        $validate_rule =[
+            'msg' => 'required',
+        ];
+        $this->validate($request,$validate_rule);
+        $msg = $request->msg;
+        $response = response()->view('hello.index',['msg' =>'「'.$msg.'」クッキーを保存しました。']);
+        $response->cookie('msg',$msg,100);
+        return $response;
+
+
+
         // オリジナルのバリデータを使うp156
-        return view("hello.index",["msg" => "正しく入力されました。"]);
+        // return view("hello.index",["msg" => "正しく入力されました。"]);
         //条件によってルールの追加p151
         // $rules = [
         //     'name' => 'required',
